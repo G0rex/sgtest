@@ -5,7 +5,6 @@
  * Date: 23.01.18
  * Time: 12:13
  */
-echo 'hello index';
 ?>
 <div class="post_section"><span class="bottom"></span>
 

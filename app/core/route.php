@@ -14,7 +14,7 @@ class Router
 
         try {
 
-            list($controller_name, $controller_function, $controller_function_params) = self::parseURI($uri);
+            list($controller_name, $controller_function) = self::parseURI($uri);
             $controller_name = ucwords($controller_name);
 
             $controller_class = $controller_name . '_Controller';
@@ -42,12 +42,12 @@ class Router
                 if (method_exists($controller, $controller_function_2)) {
                     $controller_function = $controller_function_2;
                 } else {
-                    array_unshift($controller_function_params, $controller_function);
+//                    array_unshift($controller_function_params, $controller_function);
                     $controller_function = 'index';
                 }
             }
-
-
+         
+            
             $controller->$controller_function();
 
         } catch (Exception $e) {
