@@ -5,4 +5,6 @@
  * Date: 23.01.18
  * Time: 12:58
  */
-echo 'hello call';
+echo 'hello user';
+print_r($data);
+exit;

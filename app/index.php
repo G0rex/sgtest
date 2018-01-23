@@ -12,5 +12,5 @@ require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once 'core/route.php';
 $route = new Router();
-$route->route($_SERVER['REQUEST_URI'],'app/controllers/','');
+$route->route($_SERVER['REQUEST_URI'],'');
 

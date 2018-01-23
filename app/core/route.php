@@ -9,7 +9,7 @@
 class Router
 {
 
-    public function route($uri, $namespace, $check_file_in_dir = '', $params = false)
+    public function route($uri,  $check_file_in_dir = '', $params = false)
     {
 
         try {
@@ -19,12 +19,22 @@ class Router
 
             $controller_class = $controller_name . '_Controller';
             $controller_file = strtolower($controller_name) . '_controller.php';
-            if ($check_file_in_dir && !is_file($check_file_in_dir . $namespace . $controller_file . '.php')) {
+            if ($check_file_in_dir && !is_file($check_file_in_dir . 'app/controllers/' . $controller_file . '.php')) {
                 throw new \Exception('file doesnt exist ' . $controller_class);
             }
 
             include_once 'app/controllers/' . $controller_file;
 
+            $model_name = ''.$controller_name;
+            $model_file = strtolower($model_name).'.php';
+            $model_path = "app/models/".$model_file;
+            if ($check_file_in_dir && !is_file($model_path . '.php')) {
+                throw new \Exception('file doesnt exist ' . $model_file);
+            }
+//            if(file_exists($model_path))
+//            {
+                include "app/models/".$model_file;
+//            }
             $controller = new $controller_class();
 
             if (!method_exists($controller, $controller_function)) {
