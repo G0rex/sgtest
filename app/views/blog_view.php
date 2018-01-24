@@ -37,8 +37,24 @@ print_r($data)
                 $id_first_parent = null;
                 $id_second_parent = null;
                 foreach ($data as $row) {
-
-                    if ($row['parent_id']) { ?>
+                    if ($row['created_at'] == $row['updated_at']) {
+                      $dateYearMonthDay =  date('Y-m-d', strtotime($row['created_at']));
+                    } else {
+                      $dateYearMonthDay =  date('Y-m-d', strtotime($row['updated_at']));
+                    };
+                    if ($row['created_at'] == $row['updated_at']) {
+                        $dayHoursMinute = date('H:i', strtotime($row['created_at']));
+                    } else {
+                        $dayHoursMinute = date('H:i', strtotime($row['updated_at']));
+                    }
+                    $comment = '<div class="comment_text">
+                                                    <div class="comment_author">'.$row['login'].'<span
+                                                            class="date">'. $dateYearMonthDay.'</span><span
+                                                            class="time">'. $dayHoursMinute .'</span></div>
+                                                    <p>'. $row['text'].'</p>
+                                                    <div class="reply"><a href="#">Reply</a></div>
+                                                </div>';
+                     if ($row['parent_id']) { ?>
                         <li>
                             <ol class="comments">
                                 <?php
@@ -51,21 +67,7 @@ print_r($data)
                                                 <div class="gravatar">
                                                     <img src="images/avator1.png" alt="author 3"/>
                                                 </div>
-                                                <div class="comment_text">
-                                                    <div class="comment_author"><?php echo $row['login'] ?><span
-                                                            class="date"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                                echo date('Y-m-d', strtotime($row['created_at']));
-                                                            } else {
-                                                                echo date('Y-m-d', strtotime($row['updated_at']));
-                                                            } ?></span><span
-                                                            class="time"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                                echo date('H:i', strtotime($row['created_at']));
-                                                            } else {
-                                                                echo date('H:i', strtotime($row['updated_at']));
-                                                            } ?></span></div>
-                                                    <p><?php echo $row['text'] ?></p>
-
-                                                </div>
+                                               <?php echo $comment?>
 
                                                 <div class="cleaner"></div>
                                             </div>
@@ -80,21 +82,7 @@ print_r($data)
                                         <div class="gravatar">
                                             <img src="images/avator2.png" alt="author 2"/>
                                         </div>
-                                        <div class="comment_text">
-                                            <div class="comment_author"><?php echo $row['login'] ?><span
-                                                    class="date"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                        echo date('Y-m-d', strtotime($row['created_at']));
-                                                    } else {
-                                                        echo date('Y-m-d', strtotime($row['updated_at']));
-                                                    } ?></span><span
-                                                    class="time"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                        echo date('H:i', strtotime($row['created_at']));
-                                                    } else {
-                                                        echo date('H:i', strtotime($row['updated_at']));
-                                                    } ?></span></div>
-                                            <p><?php echo $row['text'] ?></p>
-                                            <div class="reply"><a href="#">Reply</a></div>
-                                        </div>
+                                        <?php echo $comment?>
 
                                         <div class="cleaner"></div>
                                     </div>
@@ -113,21 +101,7 @@ print_r($data)
                                     <img src="images/avator1.png" alt="author 1"/>
                                 </div>
 
-                                <div class="comment_text">
-                                    <div class="comment_author"><?php echo $row['login'] ?><span
-                                            class="date"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                echo date('Y-m-d', strtotime($row['created_at']));
-                                            } else {
-                                                echo date('Y-m-d', strtotime($row['updated_at']));
-                                            } ?></span><span
-                                            class="time"><?php if ($row['created_at'] == $row['updated_at']) {
-                                                echo date('H:i', strtotime($row['created_at']));
-                                            } else {
-                                                echo date('H:i', strtotime($row['updated_at']));
-                                            } ?></span></div>
-                                    <p><?php echo $row['text'] ?></p>
-                                    <div class="reply"><a href="#">Reply</a></div>
-                                </div>
+                                <?php echo $comment?>
                                 <div class="cleaner"></div>
                             </div>
 
