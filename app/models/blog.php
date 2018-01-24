@@ -13,13 +13,13 @@ class Blog extends Model
 
         $db = self::connectDb();
         $stmt = $db->stmt_init();
-        $stmt->prepare("SELECT * FROM `comments` WHERE `post_id` = ? AND `activated`=1 AND `deleted` =0 ORDER BY `created_at` ASC");
+        $stmt->prepare("SELECT * FROM `comments` LEFT JOIN users ON comments.author_id = users.id WHERE `post_id` = ? AND `activated`=1 AND `deleted` =0 ORDER BY `created_at` ASC");
         $stmt->bind_param('i', $post_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         $arr = array();
-        while ($row = $result->fetch_row()) {
+        while ($row = $result->fetch_assoc()) {
             $arr[] = $row;
         }
         return $arr ? $arr : false;
