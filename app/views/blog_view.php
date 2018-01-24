@@ -38,16 +38,10 @@ print_r($data)
                 $id_second_parent = null;
                 foreach ($data as $row) {
 
-                    if ($row['parent_id']) {
-
-                        ?>
-
+                    if ($row['parent_id']) { ?>
                         <li>
-
-
                             <ol class="comments">
-                                <?php print_r($id_first_parent);
-                                print_r($row['parent_id']);
+                                <?php
                                 if ($id_second_parent == $row['parent_id']) { ?>
                                     <ol class="comments">
 
@@ -70,7 +64,7 @@ print_r($data)
                                                                 echo date('H:i', strtotime($row['updated_at']));
                                                             } ?></span></div>
                                                     <p><?php echo $row['text'] ?></p>
-                                                    <div class="reply"><a href="#">Reply</a></div>
+
                                                 </div>
 
                                                 <div class="cleaner"></div>
@@ -149,10 +143,6 @@ print_r($data)
         <?php }
         ?>
     </div>
-
-
-
-
 
 
     <div id="comment_form">
