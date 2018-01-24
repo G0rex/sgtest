@@ -18,14 +18,15 @@ class Auth_Controller extends Controller
             $login = $_REQUEST['uname'];
             $password = sha1(md5('qw5hj7bs3' . $_REQUEST['psw'] . $_REQUEST['uname']));
             if (!$auth->checkLoginUser($login, $password)) {
-                echo 'You are not authorised!';
-                exit;
+                header("Location: /auth/login");
+                die();
             }
-            echo 'You are authorised!';
-            exit;
+            session_start();
+            $_SESSION['id'] = $auth->returnUserId($login, $password);
+            header("Location: /");
 
         }
-        
+
         $this->view->generate('login_view.php', SiteSettings::LAYOUT_FILE . '.php', $data = $arguments);
     }
 
@@ -33,13 +34,17 @@ class Auth_Controller extends Controller
     {
         if (!empty($_REQUEST)) {
             $login = $_REQUEST['email'];
-            if ($_REQUEST['psw'] !== $_REQUEST['psw-repeat']) {
-                throw new Exception("Value must be 1 or below");
-            }
             $password = sha1(md5('qw5hj7bs3' . $_REQUEST['psw'] . $_REQUEST['email']));
             $auth = new Auth();
             $auth->registerUser($login, $password);
         }
         $this->view->generate('registration_view.php', SiteSettings::LAYOUT_FILE . '.php');
+    }
+
+    function logout()
+    {
+        session_start();
+        unset($_SESSION['id']);
+        header("Location: /auth/login");
     }
 }

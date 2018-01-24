@@ -31,10 +31,9 @@ class Router
             if ($check_file_in_dir && !is_file($model_path . '.php')) {
                 throw new \Exception('file doesnt exist ' . $model_file);
             }
-//            if(file_exists($model_path))
-//            {
-                include "app/models/".$model_file;
-//            }
+
+            include "app/models/".$model_file;
+
             $controller = new $controller_class();
 
             if (!method_exists($controller, $controller_function)) {
@@ -42,7 +41,7 @@ class Router
                 if (method_exists($controller, $controller_function_2)) {
                     $controller_function = $controller_function_2;
                 } else {
-//                    array_unshift($controller_function_params, $controller_function);
+
                     $controller_function = 'index';
                 }
             }

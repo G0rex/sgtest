@@ -5,13 +5,15 @@
  * Date: 23.01.18
  * Time: 12:12
  */
+session_start();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Test SG</title>
-    <link href="/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link href="/templatemo_style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -20,13 +22,13 @@
 
         <div id="site_title">
             <h1><a href="/">
-                    <img src="images/templatemo_logo.png" alt="tripod blog" /></a>
+                    <img src="images/templatemo_logo.png" alt="tripod blog"/></a>
                 <span>free blog template</span>
             </h1>
         </div>
 
         <div id="templatemo_rss">
-            <a href="" target="_parent">SUBSCRIBE<br /><span>OUR FEED</span></a>
+            <a href="" target="_parent">SUBSCRIBE<br/><span>OUR FEED</span></a>
         </div>
 
     </div> <!-- end of header -->
@@ -34,12 +36,16 @@
     <div id="templatemo_menu">
 
         <ul>
-            <li><a href="/" >Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/portfolio">Portfolio</a></li>
             <li><a href="/services">Services</a></li>
             <li><a href="/contactus">Contact Us</a></li>
-            <li style="float: right;"><a href="/auth/login">Login</a></li>
-            <li style="float: right;"><a href="/auth/registration">Registration</a></li>
+            <?php if (isset($_SESSION['id']) && !empty($_SESSION['id'])) { ?>
+                <li style="float: right;"><a href="/auth/logout">Logout</a></li>
+            <?php } else { ?>
+                <li style="float: right;"><a href="/auth/login">Login</a></li>
+                <li style="float: right;"><a href="/auth/registration">Registration</a></li>
+            <?php } ?>
         </ul>
 
     </div> <!-- end of templatemo_menu -->
@@ -51,7 +57,7 @@
 
         <div id="templatemo_content">
 
-         <?php include 'app/views/'.$content_view; ?>
+            <?php include 'app/views/' . $content_view; ?>
         </div>
 
         <div id="templatemo_sidebar_one">
@@ -96,7 +102,7 @@
 
             <div class="recent_comment_box">
                 <a href="#"> Lacus enim id lacinia in</a>
-                <p>Curabitur ullamcorper ultricies nisi.  Nam eget dui.   Etiam rhoncus.</p>
+                <p>Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
             </div>
 
         </div>
@@ -104,14 +110,14 @@
         <div id="templatemo_sidebar_two">
 
             <div class="banner_250x200">
-                <a href="" target="_parent"><img src="images/250x200_banner.jpg" alt="templates" /></a>
+                <a href="" target="_parent"><img src="images/250x200_banner.jpg" alt="templates"/></a>
             </div>
 
             <div class="banner_125x125">
-                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="web 1" /></a>
-                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="web 2" /></a>
-                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="templates 2" /></a>
-                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="templates 1" /></a>
+                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="web 1"/></a>
+                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="web 2"/></a>
+                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="templates 2"/></a>
+                <a href="" target="_parent"><img src="images/templatemo_ads.jpg" alt="templates 1"/></a>
             </div>
 
             <div class="cleaner_h40"></div>
@@ -143,7 +149,9 @@
     <div id="templatemo_footer">
 
         Copyright © 2048 <a href="#">Your Company Name</a> |
-        <a href="http://bayguzin.ru/" target="_parent">Website Templates</a> by <a href="http://bayguzin.ru/" target="_parent">Free CSS Templates</a>
+        <a href="http://bayguzin.ru/" target="_parent">Website Templates</a> by <a href="http://bayguzin.ru/"
+                                                                                   target="_parent">Free CSS
+            Templates</a>
 
     </div> <!-- end of templatemo_copyright -->
 </div> <!-- end of copyright wrapper -->

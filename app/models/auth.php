@@ -23,7 +23,7 @@ class Auth extends Model{
     }
     public function checkLoginUser($login,$password){
         $db = self::connectDb();
-        $result = $db->query('SELECT * FROM users WHERE login = "'.$login.'" AND password="'.$password.'"');
+        $result = $db->query('SELECT * FROM users WHERE login = "'.$login.'" AND password="'.$password.'" LIMIT 1');
         $db->close();
 
         if($result->num_rows !== 0){
@@ -32,5 +32,20 @@ class Auth extends Model{
         }
         return false;
         
+    }
+    public function returnUserId($login,$password){
+        $db = self::connectDb();
+        $result = $db->query('SELECT id FROM users WHERE login = "'.$login.'" AND password="'.$password.'" LIMIT 1');
+        $id = 0;
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $id =  $row["id"];
+            }
+        } else {
+            return 0;
+        }
+        return $id;
+
+
     }
 }
