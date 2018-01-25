@@ -7,6 +7,9 @@
  */
 class Services_Controller extends Controller {
 
+    /**
+     *Затычка для шаблона
+     */
     function index()
     {
 

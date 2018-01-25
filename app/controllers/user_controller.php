@@ -7,6 +7,9 @@
  */
 class User_Controller extends Controller {
 
+    /**
+     *Конструктор для Юзеров
+     */
     function __construct()
     {
         parent::__construct();

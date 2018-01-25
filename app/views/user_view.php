@@ -6,5 +6,5 @@
  * Time: 12:58
  */
 echo 'hello user';
-print_r($data);
+
 exit;

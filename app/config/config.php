@@ -8,6 +8,9 @@
 class SiteSettings
 {
 
+    /**
+     * Путь к главному файлу шаблону
+     */
     const LAYOUT_FILE = 'main';
     
 }

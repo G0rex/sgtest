@@ -9,7 +9,12 @@
 class Router
 {
 
-    public function route($uri,  $check_file_in_dir = '', $params = false)
+    /** Роутинг машина
+     * @param $uri
+     * @param string $check_file_in_dir
+     * @param bool $params
+     */
+    public function route($uri, $check_file_in_dir = '', $params = false)
     {
 
         try {
@@ -25,14 +30,14 @@ class Router
 
             include_once 'app/controllers/' . $controller_file;
 
-            $model_name = ''.$controller_name;
-            $model_file = strtolower($model_name).'.php';
-            $model_path = "app/models/".$model_file;
+            $model_name = '' . $controller_name;
+            $model_file = strtolower($model_name) . '.php';
+            $model_path = "app/models/" . $model_file;
             if ($check_file_in_dir && !is_file($model_path . '.php')) {
                 throw new \Exception('file doesnt exist ' . $model_file);
             }
 
-            include "app/models/".$model_file;
+            include "app/models/" . $model_file;
 
             $controller = new $controller_class();
 
@@ -45,8 +50,8 @@ class Router
                     $controller_function = 'index';
                 }
             }
-         
-            
+
+
             $controller->$controller_function();
 
         } catch (Exception $e) {
@@ -54,6 +59,10 @@ class Router
         }
     }
 
+    /** Метод роутинг машины для разбивки урла на детали
+     * @param $uri
+     * @return array
+     */
     public static function parseURI($uri)
     {
         $uri_parsed_big = parse_url($uri);

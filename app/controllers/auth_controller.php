@@ -9,6 +9,9 @@
 class Auth_Controller extends Controller
 {
 
+    /**Метод обработки логина
+     *
+     */
     function login()
     {
 
@@ -30,6 +33,9 @@ class Auth_Controller extends Controller
         $this->view->generate('login_view.php', SiteSettings::LAYOUT_FILE . '.php', $data = $arguments);
     }
 
+    /**Метод обработки регистрации
+     *
+     */
     function registration()
     {
         if (!empty($_REQUEST)) {
@@ -46,6 +52,9 @@ class Auth_Controller extends Controller
         $this->view->generate('registration_view.php', SiteSettings::LAYOUT_FILE . '.php');
     }
 
+    /**
+     *Метод обработки логаута
+     */
     function logout()
     {
         session_start();

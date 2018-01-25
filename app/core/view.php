@@ -9,7 +9,12 @@
 class View
 {
 
-  
+
+    /**
+     * @param $content_view
+     * @param $template_view
+     * @param null $data
+     */
     function generate($content_view, $template_view, $data = null)
     {
 

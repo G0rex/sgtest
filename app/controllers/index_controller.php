@@ -7,6 +7,9 @@
  */
 class Index_Controller extends Controller {
 
+    /**
+     *Затычка для шаблона
+     */
     function index()
     {
         

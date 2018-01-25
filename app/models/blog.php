@@ -8,6 +8,10 @@
  */
 class Blog extends Model
 {
+    /** Получаем комментарии исходя из Идентификатора Поста
+     * @param $post_id
+     * @return array|bool
+     */
     public function getCommentsByIdPost($post_id)
     {
 
@@ -25,7 +29,12 @@ class Blog extends Model
         return $arr ? $arr : false;
 
     }
-    function updateComment($text, $post_id, $parent_id, $author_id){
+
+    /** Обновляем комментарий в Посте
+     * @param $text
+     * @param $parent_id
+     */
+    function updateComment($text, $parent_id){
 
             $db = self::connectDb();
             $sql = "UPDATE comments SET text='".$text."' WHERE comm_id=" . $parent_id;
@@ -33,6 +42,14 @@ class Blog extends Model
 
             $db->close();
     }
+
+    /** Создаем комментарий в Посте
+     * @param $text
+     * @param $post_id
+     * @param $parent_id
+     * @param $author_id
+     * @return string
+     */
     function createComment($text, $post_id, $parent_id, $author_id)
     {
       
@@ -86,6 +103,9 @@ class Blog extends Model
 
     }
 
+    /** Удаляем комментарий в Посте
+     * @param $comment_id
+     */
     function deleteComment($comment_id)
     {
         $db = self::connectDb();

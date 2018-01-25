@@ -8,9 +8,21 @@
 class DbSettings
 {
 
+    /**
+     * Название хоста с БД
+     */
     const DB_HOST = 'localhost';
+    /**
+     *Логин пользователя БД
+     */
     const DB_USER = 'root';
+    /**
+     *Пароль пользователя БД
+     */
     const DB_PASS = 'root';
+    /**
+     *Название БД на хосте
+     */
     const DB_NAME = 'testsg';
 
 

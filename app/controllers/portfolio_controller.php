@@ -7,6 +7,9 @@
  */
 class Portfolio_Controller extends Controller {
 
+    /**
+     *Затычка для шаблона
+     */
     function index()
     {
 

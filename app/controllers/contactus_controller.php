@@ -7,6 +7,9 @@
  */
 class Contactus_Controller extends Controller {
 
+    /**
+     *Затычка для шаблона
+     */
     function index()
     {
 
