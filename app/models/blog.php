@@ -25,30 +25,38 @@ class Blog extends Model
         return $arr ? $arr : false;
 
     }
+    function updateComment($text, $post_id, $parent_id, $author_id){
 
-    function createComment($text, $post_id,  $parent_id, $author_id)
+            $db = self::connectDb();
+            $sql = "UPDATE comments SET text='".$text."' WHERE comm_id=" . $parent_id;
+            $db->query($sql);
+
+            $db->close();
+    }
+    function createComment($text, $post_id, $parent_id, $author_id)
     {
-
-        $db = self::connectDb();
-        $result = $db->query('SELECT email FROM users WHERE id = "' . $author_id . '" LIMIT 1');
-        $id = 0;
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $id = $row["email"];
+      
+            $db = self::connectDb();
+            $result = $db->query('SELECT email FROM users WHERE id = "' . $author_id . '" LIMIT 1');
+            $id = 0;
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $email = $row["email"];
+                }
+            } else {
+                return 'error';
             }
-        } else {
-            return c;
-        }
-        $db->close();
-        $db = self::connectDb();
+            $db->close();
+            $db = self::connectDb();
 
-        $sql ="INSERT INTO comments (`parent_id`,`post_id`,`author_id`,`text`) VALUES (".$parent_id.",'".$post_id."','".$author_id."','".$text."')";
+            $sql = "INSERT INTO comments (`parent_id`,`post_id`,`author_id`,`text`) VALUES ( '" . $parent_id . "','" . $post_id . "','" . $author_id . "','" . $text . "')";
 
+            if ($db->query($sql) === TRUE) {
+                $id = $db->insert_id;
+                $dateYearMonthDay = date('Y-m-d', strtotime('now'));
+                $dayHoursMinute = date('H:i', strtotime('now'));
 
-        if ($db->query($sql) === TRUE) {
-            $dateYearMonthDay =  date('Y-m-d', strtotime('now'));
-            $dayHoursMinute = date('H:i', strtotime('now'));
-            $comment = ' <li>
+                $comment = ' <li comment_id=' . $id . '>
                             <div class="comment_box commentbox1">
                                     
                                 <div class="gravatar">
@@ -56,20 +64,38 @@ class Blog extends Model
                                 </div>
                                 
                                 <div class="comment_text">
-                                    <div class="comment_author">'. $id .'<span class="date">'. $dateYearMonthDay .'</span><span class="time">'. $dayHoursMinute .'</span></div>
-                                    <p>'.$text.'</p>
-                                    <div class="reply"><a href="#">Reply</a></div>
+                                    <div class="comment_author">' . $email . '<span class="date">' . $dateYearMonthDay . '</span><span class="time">' . $dayHoursMinute . '</span></div>
+                                    <p>' . $text . '</p>
+                                    <div class="reply"><a href="#comment_form" class="reply_button" id = ' . $id . '>Reply</a></div>
+                                    <div class="edit"><a href="#comment_form" id = ' . $id . '>Edit</a></div><div class="drop"><a id = ' . $id . ' href="#">Drop</a></div>
                                 </div>
                                 <div class="cleaner"></div>
                             </div>                        
                             
                         </li>';
 
+
+            } else {
+                return "Error";
+            }
+
+            $db->close();
+            echo $comment;
+            exit;
+        
+
+    }
+
+    function deleteComment($comment_id)
+    {
+        $db = self::connectDb();
+        $sql = "UPDATE comments SET deleted='1' WHERE comm_id=" . $comment_id;
+        if ($db->query($sql) === TRUE) {
+            echo "Record deleted successfully";
         } else {
-            return "Error" ;
+            echo "Error deleting record: " . $db->error;
         }
 
-        $db->close();
-        echo  $comment;exit;
     }
+
 }

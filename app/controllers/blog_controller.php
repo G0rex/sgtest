@@ -22,6 +22,25 @@ class Blog_Controller extends Controller {
             $author_id = $_POST['author_id']?$_POST['author_id']:null;
             $comment = new Blog();
 
-        return array('data' => $comment->createComment($text,$post_id,$parent_id,$author_id));
+        echo $comment->createComment($text,$post_id,$parent_id,$author_id);
     }
+    function ajax_delete()
+    {
+
+            $comment_id = $_POST['comment_id'];
+            $comment = new Blog();
+
+        echo $comment->deleteComment($comment_id);
+    }
+    function ajax_update()
+    {
+        $text = $_POST['text'];
+        $post_id = $_POST['post_id'];
+        $parent_id = $_POST['parent_id'];
+        $author_id = $_POST['author_id']?$_POST['author_id']:null;
+        $comment = new Blog();
+
+        echo $comment->updateComment($text,$post_id,$parent_id,$author_id);
+    }
+
 }
