@@ -21,4 +21,19 @@ class User extends Model{
         $dbh->close();
         return $user_arr;
     }
+//    function getIdByEmail($email){
+//        $db = self::connectDb();
+//        $stmt = $db->stmt_init();
+//        $stmt->prepare("SELECT * FROM users WHERE email = ?");
+//        $stmt->bind_param('i', $email);
+//        $stmt->execute();
+//        $result = $stmt->get_result();
+//        $stmt->close();
+//        $arr = array();
+//        while ($row = $result->fetch_assoc()) {
+//            $arr[] = $row;
+//        }
+//        return $arr ? $arr : false;
+//       
+//    }
 }

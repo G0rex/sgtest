@@ -37,23 +37,26 @@ print_r($data)
                 $id_first_parent = null;
                 $id_second_parent = null;
                 foreach ($data as $row) {
+                    
                     if ($row['created_at'] == $row['updated_at']) {
-                      $dateYearMonthDay =  date('Y-m-d', strtotime($row['created_at']));
-                    } else {
-                      $dateYearMonthDay =  date('Y-m-d', strtotime($row['updated_at']));
-                    };
-                    if ($row['created_at'] == $row['updated_at']) {
+                        $dateYearMonthDay =  date('Y-m-d', strtotime($row['created_at']));
                         $dayHoursMinute = date('H:i', strtotime($row['created_at']));
                     } else {
+                        $dateYearMonthDay =  date('Y-m-d', strtotime($row['updated_at']));
                         $dayHoursMinute = date('H:i', strtotime($row['updated_at']));
-                    }
+                    };
                     $comment = '<div class="comment_text">
-                                                    <div class="comment_author">'.$row['login'].'<span
+                                                    <div class="comment_author">'.$row['email'].'<span
                                                             class="date">'. $dateYearMonthDay.'</span><span
                                                             class="time">'. $dayHoursMinute .'</span></div>
                                                     <p>'. $row['text'].'</p>
-                                                    <div class="reply"><a href="#">Reply</a></div>
-                                                </div>';
+                                                    <div class="reply"><a class="reply_button" id = '.$row['id'].'>Reply</a></div>
+                                                ';
+
+                    if($_SESSION['id'] == $row['author_id']){
+                        $comment .= '<div class="edit"><a href="#">Edit</a></div><div class="drop"><a href="#">Drop</a></div>';
+                    };
+                    $comment .= '</div>';
                      if ($row['parent_id']) { ?>
                         <li>
                             <ol class="comments">
@@ -109,8 +112,6 @@ print_r($data)
                         <?php
 
                     }
-                    ?>
-                    <?php
                     $id_first_parent = $row['comm_id'];
                 } ?>
             </ol>
@@ -118,28 +119,54 @@ print_r($data)
         ?>
     </div>
 
-
+<?php if($_SESSION['id']){?>
     <div id="comment_form">
         <h3>Leave A Comment</h3>
 
-        <form action="#" method="post">
-            <div class="form_row">
-                <label>Name ( Required )</label><br/>
-                <input type="text" name="name"/>
-            </div>
-            <div class="form_row">
-                <label>Email ( Required, will not be published )</label><br/>
-                <input type="text" name="name"/>
-            </div>
+        <form id="add_comment_form" action="#" method="post">
             <div class="form_row">
                 <label>Your comment</label><br/>
-                <textarea name="comment" rows="" cols=""></textarea>
+                <textarea name="comment" id="text" rows="" cols=""></textarea>
             </div>
 
-            <input type="submit" name="Submit" value="Submit" class="submit_btn"/>
+            <input type="submit" id="name" name="Submit" value="Submit" class="submit_btn"/>
         </form>
 
     </div>
-
+<?php }else{?>
+    <h3>Чтобы оставлять комментарии, пожалуйста, Войдите в свою учетную запись или Зарегистрируйтесь</h3>
+    <?php } ?>
 </div>
-    
+<script src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $("#add_comment_form").submit(function(e){
+        var text = $('#text').val();
+        var author_id = <?php echo $_SESSION['id']?>;
+        $.ajax({
+            type: "POST",
+            url: "/blog/ajax",
+            data: "text="+text+"&post_id="+10+"&parent_id=null&author_id="+author_id,
+            success: function(data){
+                $('.first_level').append(data);
+//                alert( "Прибыли данные: " + data );
+            }
+        });
+        return false;
+    });
+    $(".reply_button").click(function(e){
+        console.log(event.target.id);
+//        var text = $('#text').val();
+//        var author_id = <?php //echo $_SESSION['id']?>//;
+//        $.ajax({
+//            type: "POST",
+//            url: "/blog/ajax",
+//            data: "text="+text+"&post_id="+10+"&parent_id=null&author_id="+author_id,
+//            success: function(data){
+//                $('.first_level').append(data);
+////                alert( "Прибыли данные: " + data );
+//            }
+//        });
+//        return false;
+    });
+</script>

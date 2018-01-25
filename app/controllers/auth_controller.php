@@ -15,14 +15,14 @@ class Auth_Controller extends Controller
         $arguments = array();
         if (!empty($_REQUEST)) {
             $auth = new Auth();
-            $login = $_REQUEST['uname'];
+            $email = $_REQUEST['uname'];
             $password = sha1(md5('qw5hj7bs3' . $_REQUEST['psw'] . $_REQUEST['uname']));
-            if (!$auth->checkLoginUser($login, $password)) {
+            if (!$auth->checkLoginUser($email, $password)) {
                 header("Location: /auth/login");
                 die();
             }
             session_start();
-            $_SESSION['id'] = $auth->returnUserId($login, $password);
+            $_SESSION['id'] = $auth->returnUserId($email, $password);
             header("Location: /");
 
         }
@@ -33,10 +33,15 @@ class Auth_Controller extends Controller
     function registration()
     {
         if (!empty($_REQUEST)) {
-            $login = $_REQUEST['email'];
+
+            $email = $_REQUEST['email'];
             $password = sha1(md5('qw5hj7bs3' . $_REQUEST['psw'] . $_REQUEST['email']));
             $auth = new Auth();
-            $auth->registerUser($login, $password);
+            $auth->registerUser( $password,$email);
+            session_start();
+            $_SESSION['id'] = $auth->returnUserId($email, $password);
+
+            $this->view->generate('blog_view.php', SiteSettings::LAYOUT_FILE . '.php');
         }
         $this->view->generate('registration_view.php', SiteSettings::LAYOUT_FILE . '.php');
     }

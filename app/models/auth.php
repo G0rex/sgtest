@@ -7,9 +7,9 @@
  */
 class Auth extends Model{
 
-    public  function registerUser($login , $password){
+    public  function registerUser( $password, $email){
         $db = self::connectDb();
-        $sql ="INSERT INTO users (`login`,`password`) VALUES ('".$login."','".$password."')";
+        $sql ="INSERT INTO users (`password`,`email`) VALUES ('".$password."','".$email."')";
 
 
         if ($db->query($sql) === TRUE) {
@@ -33,9 +33,9 @@ class Auth extends Model{
         return false;
         
     }
-    public function returnUserId($login,$password){
+    public function returnUserId($email,$password){
         $db = self::connectDb();
-        $result = $db->query('SELECT id FROM users WHERE login = "'.$login.'" AND password="'.$password.'" LIMIT 1');
+        $result = $db->query('SELECT id FROM users WHERE email = "'.$email.'" AND password="'.$password.'" LIMIT 1');
         $id = 0;
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
